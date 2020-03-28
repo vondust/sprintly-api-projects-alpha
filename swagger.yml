@@ -1,0 +1,119 @@
+swagger: "2.0"
+info:
+  description: Swagger file
+  version: "1.0.0"
+  title: Swagger ReST Projects
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /projects:
+    get:
+      operationId: projects.read_all
+      tags:
+        - Projects
+      summary: Lista de projetos
+      description: Lista de projetos
+      responses:
+        200:
+          description: Sucesso na leitura dos projetos
+          schema:
+            type: array
+            items:
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                timestamp:
+                  type: string
+    post:
+      operationId: projects.create
+      tags:
+        - Projects
+      summary: Cria um projeto e adiciona na lista de Projetos
+      description: Adiciona na lista de Projetos
+      parameters:
+        - name: project
+          in: body
+          description: Projeto a ser criado
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nome do projeto, deve ser único
+              description:
+                type: string
+                description: Descrição do projeto
+      responses:
+        201:
+          description: Sucesso ao criar
+
+  /projects/{name}:
+    get:
+      operationId: projects.read_one
+      tags:
+        - Projects
+      summary: Leitura de um projeto da lista de Projetos
+      description: Leitura de um projeto
+      parameters:
+        - name: name
+          in: path
+          description: Nome do projeto
+          type: string
+          required: True
+      responses:
+        200:
+          description: Sucesso na leitura de um projeto
+          schema:
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              timestamp:
+                type: string
+
+    put:
+      operationId: projects.update
+      tags:
+        - Projects
+      summary: Update na lista de Projetos
+      description: Update na lista
+      parameters:
+        - name: name
+          in: path
+          description: Nome do projeto
+          type: string
+          required: True
+        - name: project
+          in: body
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+      responses:
+        200:
+          description: Sucesso ao atualizar
+
+    delete:
+      operationId: projects.delete
+      tags:
+        - Projects
+      summary: Deletar um projeto na lista de Projetos
+      description: Deleta um projeto
+      parameters:
+        - name: name
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Sucesso ao deletar
